@@ -11,10 +11,10 @@
     "hardhat": "^2.4.3"
   },
   "scripts": {
-    "compile": "yarn hardhat compile",
+    "compile": "yarn hardhat compile",    
+    "marketplace:deploy": "yarn hardhat run scripts/deploy-marketplace.js --network rinkeby",
     "nft:deploy": "yarn hardhat run scripts/deploy-nft.js --network rinkeby",
-    "market:deploy": "yarn hardhat run scripts/deploy-market.js --network rinkeby",
-    "test": "yarn hardhat test"
+    "test": "yarn hardhat test --network localhost"
   },
   "dependencies": {
     "@alch/alchemy-web3": "^1.1.1",
