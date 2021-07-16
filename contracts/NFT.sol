@@ -1,33 +1,27 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-
-contract NFT is ERC721, Ownable {
+contract NFT is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
-    mapping (uint256 => string) private _tokenURIs;
+    address contractAddress;
 
-    constructor() ERC721("NFT NAME", "NFT") {}
-
-    function mintNFT(address recipient, string memory tokenURI)
-        public onlyOwner
-        returns (uint256)
-    {
-        _tokenIds.increment();
-
-        uint256 newItemId = _tokenIds.current();
-        _mint(recipient, newItemId);
-        _setTokenURI(newItemId, tokenURI);
-
-        return newItemId;
+    constructor(address marketplaceAddress) ERC721("Amazing Tokens", "AMAZ") {
+        contractAddress = marketplaceAddress;
     }
 
-    function _setTokenURI(uint256 tokenId, string memory _tokenURI) internal virtual {
-        require(_exists(tokenId), "ERC721Metadata: URI set of nonexistent token");
-        _tokenURIs[tokenId] = _tokenURI;
+    function createToken(string memory tokenURI) public returns (uint) {
+        _tokenIds.increment();
+        uint256 newTokenId = _tokenIds.current();
+
+        _mint(msg.sender, newTokenId);
+        _setTokenURI(newTokenId, tokenURI);
+        setApprovalForAll(contractAddress, true);
+
+        return newTokenId;
     }
 }
