@@ -1,14 +1,17 @@
+const { MARKETPLACE_CONTRACT_ADDRESS } = process.env;
+
 async function main() {
-    const NFT = await ethers.getContractFactory("NFT");
-    
-    // Start deployment, returning a promise that resolves to a contract object
-    const nft = await NFT.deploy();
-    console.log("Contract deployed to address:", nft.address);
- }
- 
- main()
-   .then(() => process.exit(0))
-   .catch(error => {
-     console.error(error);
-     process.exit(1);
-   });
+  const NFT = await ethers.getContractFactory("NFT");
+
+  console.log("Marketplace contract address:", MARKETPLACE_CONTRACT_ADDRESS)
+  
+  const nft = await NFT.deploy(MARKETPLACE_CONTRACT_ADDRESS);
+  console.log("NFT deployed to address:", nft.address);
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch(error => {
+    console.error(error);
+    process.exit(1);
+  });

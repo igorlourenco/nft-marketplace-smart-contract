@@ -13,7 +13,7 @@
   "scripts": {
     "compile": "yarn hardhat compile",
     "nft:deploy": "yarn hardhat run scripts/deploy-nft.js --network rinkeby",
-    "nft:mint": "yarn hardhat run scripts/mint-nft.js",
+    "market:deploy": "yarn hardhat run scripts/deploy-market.js --network rinkeby",
     "test": "yarn hardhat test"
   },
   "dependencies": {
